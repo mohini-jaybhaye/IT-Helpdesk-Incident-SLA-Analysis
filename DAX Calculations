@@ -14,3 +14,5 @@ MTTR Target (Hrs) = 16
 
 Open Tickets = CALCULATE([Total Tickets], ISBLANK(Fact_Tickets[Resolution_Timestamp]))
 
+
+
