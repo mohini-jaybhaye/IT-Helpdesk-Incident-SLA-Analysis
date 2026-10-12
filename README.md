@@ -1,10 +1,10 @@
 # IT Helpdesk Incident & SLA Performance Analysis
 
-**Tech Stack:** Power BI | Power Query | DAX | Star Schema  Data Modeling | 10K Incident Tickets
+**Tech Stack:** Power BI | Power BI Desktop | Power Query | DAX | Data Modeling
 
 ## Project Overview
 
-This project focuses on analyzing IT helpdesk incidents and Service Level Agreement (SLA) performance using Power BI. The dashboard provides insights into ticket volume, SLA compliance, resolution time, backlog ageing, root causes, escalations, and team and engineer performance.
+This project focuses on analyzing IT helpdesk incidents and Service Level Agreement (SLA) performance for 10K incident tickets using Power BI. The dashboard provides insights into ticket volume, SLA compliance, resolution time, backlog ageing, root causes, escalations, and team and engineer performance.
 The objective is to identify SLA breaches, monitor unresolved tickets, understand operational bottlenecks, and support data-driven decisions to improve IT support efficiency.
 
 ## Business Problem
@@ -41,16 +41,17 @@ The goal of this project is to analyze helpdesk ticket data, identify SLA breach
 
 ### Data Modeling
 The project uses a star-schema data model with Fact_Tickets as the central fact table connected to dimension tables such as Dim_Date, Dim_Engineer, Dim_Category, and Dim_Priority. This structure supports organized data analysis and reporting across different helpdesk dimensions.
+
 ![Power BI Data Model](Star_Schema_Data_Model.png)
 
 ### Calculated Columns & Metrics
-- Created calculated columns for Created Hour, Resolution Hour, First Response Hour, Age Days, Ageing Bucket, and SLA Breach Flag.
+- Created calculated columns for Created Hour, Resolution Hour, First Response Hour, Age Days, Ageing Bucket, Open SLA Status and SLA Breach Flag.
 - Developed DAX measures to analyze SLA Compliance, Mean Time to Resolution (MTTR), Open Tickets, Backlog Ageing, Reopen Rate, and other performance indicators.
 
 ## Dashboard Pages
 
 ### 1. Incident & SLA Performance
-Provides an overview of helpdesk operations through key performance indicators, including SLA Compliance, Mean Time to Resolution (MTTR), Open Tickets, and other incident performance metrics.
+Provides an overview of helpdesk operations through key performance indicators, including SLA Compliance, Mean Time to Resolution (MTTR), Open Tickets, Reopen Rate and other incident performance metrics.
 ![Incident & SLA Performance](01_Incident_SLA_Performance.png)
 
 ### 2. Root Cause & SLA Analysis
@@ -74,7 +75,7 @@ Created a dedicated drill-through page to view detailed ticket-level information
 - **SLA Compliance:** Overall SLA compliance is 81.4%, which is below the target of 95%, indicating scope for improvement in timely ticket resolution.
 - **Open Ticket Backlog:** There are 826 open tickets, of which 721 have breached their SLA, highlighting the need for focused backlog management.
 - **Ticket Ageing:** The average backlog age is 28.6 days, and 40.8% of open tickets have been pending for more than 7 days.
-- **Team Performance:** Network Support has an SLA compliance rate of 71.0%, compared with 88.1% for Desktop Support, indicating a performance gap between the teams.
+- **Team Performance:** Network Team has an SLA compliance rate of 71.0%, compared with 88.1% for Desktop Support, indicating a performance gap between the teams.
 - **Root Cause Analysis:** Root cause analysis helps identify incident categories associated with SLA breaches and resolution delays, supporting further investigation into recurring issues.
 - **Operational Monitoring:** Team-level, engineer-level, and ticket-ageing analysis helps identify areas requiring attention and supports better workload management.
 
@@ -83,7 +84,7 @@ Created a dedicated drill-through page to view detailed ticket-level information
 - **Improve SLA Compliance:** Investigate the reasons for SLA breaches and strengthen ticket prioritization to move overall compliance closer to the 95% target.
 - **Reduce Ticket Backlog:** Prioritize open tickets with breached SLAs and assign clear resolution timelines to reduce pending incidents.
 - **Address Ageing Tickets:** Introduce ageing-based escalation rules to ensure that long-pending tickets receive timely attention.
-- **Improve Team Performance:** Investigate the reasons behind lower SLA compliance in Network Support and identify improvement opportunities through workload balancing and process reviews.
+- **Improve Team Performance:** Investigate the reasons behind lower SLA compliance in Network Team and identify improvement opportunities through workload balancing and process reviews.
 - **Investigate Root Causes:** Analyze recurring incident categories and address underlying issues to reduce repeated tickets and resolution delays.
 - **Optimize Workload Distribution:** Monitor team and engineer workloads to identify imbalances and support more effective ticket assignment.
 
