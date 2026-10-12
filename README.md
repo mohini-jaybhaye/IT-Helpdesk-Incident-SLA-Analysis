@@ -41,7 +41,7 @@ The goal of this project is to analyze helpdesk ticket data, identify SLA breach
 
 ### Data Modeling
 The project uses a star-schema data model with Fact_Tickets as the central fact table connected to dimension tables such as Dim_Date, Dim_Engineer, Dim_Category, and Dim_Priority. This structure supports organized data analysis and reporting across different helpdesk dimensions.
-![Power BI Data Model](06_Data_Model.png)
+![Power BI Data Model](Star_Schema_Data_Model.png)
 
 ### Calculated Columns & Metrics
 - Created calculated columns for Created Hour, Resolution Hour, First Response Hour, Age Days, Ageing Bucket, and SLA Breach Flag.
