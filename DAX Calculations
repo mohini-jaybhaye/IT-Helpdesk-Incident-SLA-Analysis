@@ -4,8 +4,13 @@ Tool: Power BI | DAX
 This file contains the DAX measures developed for IT Helpdesk incident & SLA performance analysis.
 */
 
-## DASHBOARD 1: INCIDENT & SLA PERFORMANCE
+Total Tickets = COUNTROWS(Fact_Tickets)
 
---1. Total Tickets = COUNTROWS(Fact_Tickets)
---2. SLA Compliance % = DIVIDE([Resolved Tickets]-[SLA Breached],[Resolved Tickets])
+SLA Compliance % = DIVIDE([Resolved Tickets]-[SLA Breached],[Resolved Tickets])
+
+MTTR (Hrs) = AVERAGE(Fact_Tickets[Resolution_Hours])
+
+MTTR Target (Hrs) = 16
+
+Open Tickets = CALCULATE([Total Tickets], ISBLANK(Fact_Tickets[Resolution_Timestamp]))
 
