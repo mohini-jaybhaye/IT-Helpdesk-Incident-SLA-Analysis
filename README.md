@@ -24,11 +24,12 @@ The goal of this project is to analyze helpdesk ticket data, identify SLA breach
 
 ## Tools & Technologies
 
-- **Power BI Desktop:** Used to build interactive dashboards and visualize key performance indicators.
-- **Power Query:** Used for data cleaning, transformation, and preparation.
-- **DAX (Data Analysis Expressions):** Used to create calculated measures and columns for SLA analysis, ticket ageing, resolution time, and performance metrics.
-- **Data Modeling:** Used to organize ticket data and related dimension tables for effective analysis.
 - **Microsoft Excel:** Used as the source file for helpdesk incident data.
+- **Power Query:** Used for data cleaning, transformation, and preparation.
+- **Data Modeling:** Used to organize ticket data and related dimension tables for effective analysis.
+- **Power BI Desktop:** Used to build interactive dashboards and visualize key performance indicators.
+- **DAX (Data Analysis Expressions):** Used to create calculated measures and columns for SLA analysis, ticket ageing, resolution time, and performance metrics.
+
 
 ## Data Preparation & Modeling
 
