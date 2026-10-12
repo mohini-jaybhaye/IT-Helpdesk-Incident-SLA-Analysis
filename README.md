@@ -40,9 +40,8 @@ The goal of this project is to analyze helpdesk ticket data, identify SLA breach
 - Created date-related fields for time-based reporting.
 
 ### Data Modeling
-- Designed a structured data model for helpdesk ticket analysis.
-- Created an Engineer dimension table to support team and engineer-level analysis.
-- Established relationships between ticket data and related dimension tables.
+The project uses a star-schema data model with Fact_Tickets as the central fact table connected to dimension tables such as Dim_Date, Dim_Engineer, Dim_Category, and Dim_Priority. This structure supports organized data analysis and reporting across different helpdesk dimensions.
+![Power BI Data Model](06_Data_Model.png)
 
 ### Calculated Columns & Metrics
 - Created calculated columns for Created Hour, Resolution Hour, First Response Hour, Age Days, Ageing Bucket, and SLA Breach Flag.
@@ -52,23 +51,23 @@ The goal of this project is to analyze helpdesk ticket data, identify SLA breach
 
 ### 1. Incident & SLA Performance
 Provides an overview of helpdesk operations through key performance indicators, including SLA Compliance, Mean Time to Resolution (MTTR), Open Tickets, and other incident performance metrics.
-![Incident & SLA Performance](screenshots/01_Incident_SLA_Performance.png)
+![Incident & SLA Performance](01_Incident_SLA_Performance.png)
 
 ### 2. Root Cause & SLA Analysis
 Analyzes incident root causes and SLA performance to identify patterns associated with SLA breaches and resolution delays.
-![Root Cause & SLA Analysis](screenshots/02_Root_Cause_SLA_Analysis.png)
+![Root Cause & SLA Analysis](02_Root_Cause_SLA_Analysis.png)
 
 ### 3. Backlog, Ageing & Exceptions
 Focuses on unresolved tickets, ticket ageing categories, overdue incidents, and SLA-breached open tickets to highlight areas requiring immediate attention.
-![Backlog, Ageing & Exceptions](screenshots/03_Backlog_Ageing_Exceptions.png)
+![Backlog, Ageing & Exceptions](03_Backlog_Ageing_Exceptions.png)
 
 ### 4. Team & Engineer Performance
 Evaluates team-level and engineer-level performance using SLA compliance, ticket resolution, workload, and other relevant performance metrics.
-![Team & Engineer Performance](screenshots/04_Team_Engineer_Performance.png)
+![Team & Engineer Performance](04_Team_Engineer_Performance.png)
 
 ### 5. Ticket Details (Drill-through)
 Created a dedicated drill-through page to view detailed ticket-level information based on the selected data context. Users can navigate from summary visuals to the Ticket Details page to investigate specific incidents.
-![Ticket Details Drill-through](screenshots/05_Ticket_Details_Drillthrough.png)
+![Ticket Details Drill-through](05_Ticket_Details_Drillthrough.png)
 
 ## Key Business Insights
 
