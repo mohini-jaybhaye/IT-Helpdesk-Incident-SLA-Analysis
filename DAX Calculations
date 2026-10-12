@@ -4,7 +4,7 @@ Tool: Power BI | DAX
 This file contains the DAX measures developed for IT Helpdesk incident & SLA performance analysis.
 */
 
--- DASHBOARD 1: INCIDENT & SLA PERFORMANCE
+## DASHBOARD 1: INCIDENT & SLA PERFORMANCE
 
 --1. Total Tickets = COUNTROWS(Fact_Tickets)
 --2. SLA Compliance % = DIVIDE([Resolved Tickets]-[SLA Breached],[Resolved Tickets])
