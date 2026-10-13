@@ -63,6 +63,7 @@ The project uses a star-schema data model with Fact_Tickets as the central fact 
 The following files contain the DAX calculations used in this project.
 
 [DAX Measures](Measures.dax) – KPI calculations, SLA metrics, MoM changes, delta values, status indicators, and other measures.
+
 [Calculated Columns](Calculated_Columns.dax) – Calculated columns used for ticket ageing, SLA tracking, response time, and resolution time.
 
 ## Dashboard Pages
