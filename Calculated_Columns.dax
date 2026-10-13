@@ -1,0 +1,27 @@
+/*
+Project: IT Helpdesk Incident & SLA Performance Analysis
+File: Calculated Columns
+Tool: Power BI | DAX
+
+This file documents the calculated columns created for incident analysis, SLA tracking, response and resolution time, and ticket ageing.
+*/
+
+Created_Hour = HOUR(Fact_Tickets[Created_Timestamp])
+Resolution_Hours = DATEDIFF(Fact_Tickets[Created_Timestamp],Fact_Tickets[Resolution_Timestamp],MINUTE)/60
+
+First_Response_Hrs = DATEDIFF(Fact_Tickets[Created_Timestamp],Fact_Tickets[First_Response_Timestamp],MINUTE)/60
+  
+SLA_Breach_Flag = IF(Fact_Tickets[Resolution_Hours]>Fact_Tickets[SLA_Target_Hours],1,0)
+  
+Open_Age_Hrs = IF(ISBLANK(Fact_Tickets[Resolution_Timestamp]), DATEDIFF(Fact_Tickets[Created_Timestamp],Fact_Tickets[Report_Date],MINUTE)/60,BLANK())
+  
+Age_Days = IF(ISBLANK(Fact_Tickets[Resolution_Timestamp]),INT(Fact_Tickets[Open_Age_Hrs]/24),BLANK())
+  
+Ageing_Bucket = IF(NOT ISBLANK(Fact_Tickets[Resolution_Timestamp]),BLANK(),SWITCH(TRUE(),Fact_Tickets[Age_Days]<=1, "0-1 Day", Fact_Tickets[Age_Days]<=3, "2-3 Days", Fact_Tickets[Age_Days]<=7, "4-7 Days", "7+ Days"))
+
+Bucket_Order = IF(NOT ISBLANK(Fact_Tickets[Resolution_Timestamp]), BLANK(), SWITCH(TRUE(),Fact_Tickets[Age_Days]<=1, 1,Fact_Tickets[Age_Days]<=3,2,Fact_Tickets[Age_Days]<=7,3, 4))
+
+Open_SLA_Status = IF(ISBLANK(Fact_Tickets[Resolution_Timestamp]), SWITCH(TRUE(),Fact_Tickets[Open_Age_Hrs]>Fact_Tickets[SLA_Target_Hours], "Breached",Fact_Tickets[Open_Age_Hrs]>=0.8*Fact_Tickets[SLA_Target_Hours], "At Risk", "Within SLA"), BLANK())
+
+
+
