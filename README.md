@@ -117,8 +117,14 @@ Created a dedicated drill-through page to view detailed ticket-level information
 - **Page Navigation:** Navigate between the four dashboard pages for a structured analysis of helpdesk performance.
 - **Drill-through Analysis:** Navigate from summary visuals to the Ticket Details page to investigate individual tickets based on the selected data context.
 - **KPI Cards and Visualizations:** Monitor key performance indicators and identify patterns in SLA compliance, ticket backlog, ageing, and team performance.
-- **Detailed Ticket View:** Examine ticket-level information to support further investigation of specific incidents.
 - **Row-Level Security (RLS):** Configured and tested role-based data access for four support teams, including Network Team Lead and Desktop Support Team Lead, to ensure that users can view data relevant to their assigned teams.
+
+**RLS Role Configuration**
+![RLS Role Configuration](RLS_Role_Configuration.png)
+
+**RLS Validation Example — Network Team**
+![Network Team RLS Example](RLS_Network_Team_Example.png)
+
 
 ## Project Outcome
 
