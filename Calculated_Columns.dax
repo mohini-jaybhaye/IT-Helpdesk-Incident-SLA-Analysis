@@ -7,6 +7,7 @@ This file documents the calculated columns created for incident analysis, SLA tr
 */
 
 Created_Hour = HOUR(Fact_Tickets[Created_Timestamp])
+
 Resolution_Hours = DATEDIFF(Fact_Tickets[Created_Timestamp],Fact_Tickets[Resolution_Timestamp],MINUTE)/60
 
 First_Response_Hrs = DATEDIFF(Fact_Tickets[Created_Timestamp],Fact_Tickets[First_Response_Timestamp],MINUTE)/60
