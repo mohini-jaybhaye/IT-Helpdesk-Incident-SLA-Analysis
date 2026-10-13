@@ -34,11 +34,21 @@ The goal of this project is to analyze helpdesk ticket data, identify SLA breach
 ## Data Preparation & Modeling
 
 ### Data Cleaning & Transformation
+
+Data cleaning and transformation were performed in Power Query to improve data quality, maintain consistency, and prepare the dataset for analysis.
+
 - Removed duplicate Ticket IDs and blank rows.
 - Handled missing values and inconsistent text entries.
-- Cleaned extra spaces and standardized text values.
-- Corrected data types for accurate analysis.
+- Trimmed extra spaces and corrected text inconsistencies.
+- Standardized data types for accurate calculations.
 - Created date-related fields for time-based reporting.
+- Prepared and transformed data for modeling and analysis.
+
+**Power Query Applied Steps**
+
+The Power Query Editor was used to apply and track data cleaning and transformation steps before loading the data into Power BI.
+![Power Query Applied Steps](Power_Query_Applied_Steps.png)
+
 
 ### Data Modeling
 The project uses a star-schema data model with Fact_Tickets as the central fact table connected to dimension tables such as Dim_Date, Dim_Engineer, Dim_Category, and Dim_Priority. This structure supports organized data analysis and reporting across different helpdesk dimensions.
