@@ -1,0 +1,295 @@
+/*Project: IT Helpdesk Incident & SLA Performance Analysis
+File: DAX Measures
+Tool: Power BI | DAX
+This file contains the DAX measures developed for IT Helpdesk incident & SLA performance analysis.
+*/
+
+-- 1. Volume & Ticket Counts
+
+Total Tickets = COUNTROWS(Fact_Tickets)
+
+Resolved Tickets = CALCULATE([Total Tickets],NOT ISBLANK(Fact_Tickets[Resolution_Timestamp]))
+
+Tickets Resolved = CALCULATE([Total Tickets],USERELATIONSHIP(Fact_Tickets[Resolution_Date],Dim_Date[Date]))
+
+Tickets Prev Month = CALCULATE([Total Tickets],DATEADD(Dim_Date[Date],-1,MONTH))
+
+Open Tickets = CALCULATE([Total Tickets], ISBLANK(Fact_Tickets[Resolution_Timestamp]))
+
+Aged Backlog 7+ = CALCULATE([Total Tickets],Fact_Tickets[Ageing_Bucket]= "7+ Days")
+
+Unassigned Tickets = CALCULATE([Total Tickets],Fact_Tickets[Engineer_Name]= "Unassigned")
+
+Unassigned % = DIVIDE([Unassigned Tickets],[Total Tickets]) 
+
+Escalated Tickets = CALCULATE([Total Tickets], Fact_Tickets[Escalated]= "Yes")
+
+Vendor Pending Tickets = CALCULATE([Open Tickets],Fact_Tickets[Fulfillment_Stage]= "Pending Vendor Response")
+
+-- 2. SLA Metrics
+
+SLA Breached = CALCULATE([Total Tickets],Fact_Tickets[SLA_Breach_Flag]=1)
+
+SLA Compliance % = DIVIDE([Resolved Tickets]-[SLA Breached],[Resolved Tickets])
+
+SLA Breach % = DIVIDE([SLA Breached],[Resolved Tickets])
+
+SLA Target % = 0.95
+
+SLA Gap vs Target = [SLA Compliance %]-[SLA Target %]
+
+Within SLA Open = CALCULATE([Total Tickets],Fact_Tickets[Open_SLA_Status]= "Within SLA")
+
+Breached Open = CALCULATE([Total Tickets],Fact_Tickets[Open_SLA_Status]= "Breached")
+
+At Risk Open = CALCULATE([Total Tickets],Fact_Tickets[Open_SLA_Status]= "At Risk")
+
+-- 3. Performance & Time Metrics
+
+AHT (Min) = AVERAGE(Fact_Tickets[Handle_Time_Min])
+
+Avg Backlog Age (Days) = CALCULATE(AVERAGE(Fact_Tickets[Age_Days]),ISBLANK(Fact_Tickets[Resolution_Timestamp]))
+
+Avg CSAT = AVERAGE(Fact_Tickets[CSAT_Score])
+
+Avg First Response (Hrs) = AVERAGE(Fact_Tickets[First_Response_Hrs])
+
+Complaint TAT (Hrs) = CALCULATE([MTTR (Hrs)],Fact_Tickets[Ticket_Type]= "Complaint")
+
+Engineer SLA Rank = IF(HASONEVALUE(Dim_Engineer[Engineer_Name]) && SELECTEDVALUE(Dim_Engineer[Engineer_Name])<> "Unassigned", RANKX(FILTER(ALL(Dim_Engineer[Engineer_Name]),Dim_Engineer[Engineer_Name]<> "Unassigned"),[SLA Compliance %], ,DESC, Dense))
+
+MTTR (Hrs) = AVERAGE(Fact_Tickets[Resolution_Hours])
+
+MTTR Target (Hrs) = 16
+
+MTTR Variance = [MTTR (Hrs)]-[MTTR Target (Hrs)]
+
+Tickets Per Engineer = VAR AssignedResolved= CALCULATE([Resolved Tickets],Fact_Tickets[Engineer_Name]<> "Unassigned") VAR Engineers=CALCULATE(DISTINCTCOUNT(Fact_Tickets[Engineer_ID]),Fact_Tickets[Engineer_Name]<> "Unassigned") RETURN DIVIDE(AssignedResolved , Engineers)
+
+-- 4. Advanced & Trend Metrics
+
+Aged Backlog % = DIVIDE([Aged Backlog 7+],[Open Tickets])
+
+Breach Contribution % = DIVIDE([SLA Breached],CALCULATE([SLA Breached],ALLSELECTED(Fact_Tickets)))
+
+Escalated Rate % = DIVIDE([Escalated Tickets],[Total Tickets])
+
+FCR % = DIVIDE(CALCULATE([Resolved Tickets],Fact_Tickets[Escalated]= "No", Fact_Tickets[Reopen_Count]=0),[Resolved Tickets])
+
+Non-Vendor Breach % = CALCULATE([SLA Breach %],Fact_Tickets[Vendor_Dependency]= "No")
+
+Performance Status = VAR Compliance=[SLA Compliance %] RETURN IF(ISBLANK(Compliance),BLANK(), SWITCH( TRUE(), Compliance >=[SLA Target %], "On Target", Compliance>=[SLA Target %]-0.10, "Watch", "Needs Support"))
+
+Reopen Rate % = DIVIDE(CALCULATE([Total Tickets],Fact_Tickets[Reopen_Count]>0),[Resolved Tickets])
+
+Ticket Volume MoM % = DIVIDE([Total Tickets]-[Tickets Prev Month],[Tickets Prev Month])
+
+Vendor Breach % = CALCULATE([SLA Breach %],Fact_Tickets[Vendor_Dependency]= "Yes")
+
+Running Backlog = VAR d=MAX(Dim_Date[Date]) VAR CreatedTillDate=CALCULATE([Total Tickets],FILTER(ALL(Dim_Date[Date]),Dim_Date[Date] <= d)) VAR SolvedTillDate= CALCULATE(_Measures[Resolved Tickets],FILTER(ALL(Dim_Date[Date]), Dim_Date[Date]<= d)) RETURN CreatedTillDate - SolvedTillDate
+
+Root Cause Cumulative % = VAR CurCount= [Total Tickets] VAR RunningTotal= CALCULATE([Total Tickets],FILTER(ALLSELECTED(Fact_Tickets[Root_Cause]),[Total Tickets]>=CurCount)) VAR GrandTotal = CALCULATE([Total Tickets],ALLSELECTED(Fact_Tickets[Root_Cause])) RETURN DIVIDE(RunningTotal,GrandTotal)
+
+-- 5. Delta Value & Status Colour
+
+AHT Prev Month = CALCULATE([AHT (Min)], DATEADD(Dim_Date[Date], -1, MONTH))
+AHT MoM Change = [AHT (Min)]-[AHT Prev Month]
+AHT Delta Value = IF(ISBLANK([AHT MoM Change]), "", IF([AHT MoM Change]>=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([AHT MoM Change]), "0.0"))
+AHT Status Colour = IF([AHT MoM Change]<=0, "#2E8B57", "#C0392B")
+
+Avg CSAT Prev Month = CALCULATE([Avg CSAT],DATEADD(Dim_Date[Date],-1,MONTH))
+Avg CSAT MoM Change = [Avg CSAT]-[Avg CSAT Prev Month]
+Avg CSAT Delta Value = IF(ISBLANK([Avg CSAT MoM Change]), "", IF([Avg CSAT MoM Change]>=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([Avg CSAT MoM Change]), "0.00"))
+Avg CSAT Status Colour = IF([Avg CSAT MoM Change]>=0, "#2E8B57", "#C0392B")
+
+Avg First Response Prev Month = CALCULATE([Avg First Response (Hrs)], DATEADD(Dim_Date[Date], -1, MONTH))
+Avg First Response MoM Change = [Avg First Response (Hrs)]-[Avg First Response Prev Month]
+Avg First Response Delta Value = IF(ISBLANK([Avg First Response MoM Change]), "", IF([Avg First Response MoM Change]>=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([Avg First Response MoM Change]), "0.0") & " hrs")
+Avg First Response Status Colour = IF([Avg First Response MoM Change]<= 0, "#2E8B57", "#C0392B")
+
+Complaint TAT Prev Month = CALCULATE([Complaint TAT (Hrs)], DATEADD(Dim_Date[Date], -1, MONTH))
+Complaint TAT MoM Change = [Complaint TAT (Hrs)]-[Complaint TAT Prev Month]
+Complaint TAT Delta Value = IF(ISBLANK([Complaint TAT MoM Change]), "", IF([Complaint TAT MoM Change] >=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([Complaint TAT MoM Change]), "0.0") & " hrs")
+Complaint TAT Status Colour = IF([Complaint TAT MoM Change] <=0, "#2E8B57", "#C0392B")
+
+Escalated Rate Prev Month = CALCULATE(_Measures[Escalated Rate %], DATEADD(Dim_Date[Date], -1, MONTH))
+Escalated Rate MoM Change = [Escalated Rate %]-[Escalated Rate Prev Month]
+Escalated Rate Delta Value = IF(ISBLANK([Escalated Rate MoM Change]), "", IF([Escalated Rate MoM Change]>=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([Escalated Rate MoM Change]), "0.0%"))
+Escalated Rate Status Colour = IF([Escalated Rate MoM Change]<=0, "#2E8B57", "#C0392B")
+
+FCR Prev Month = CALCULATE([FCR %], DATEADD(Dim_Date[Date], -1, MONTH))
+FCR MoM Change = [FCR %]-[FCR Prev Month]
+FCR Delta Value = IF(ISBLANK([FCR MoM Change]), "", IF([FCR MoM Change]>=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([FCR MoM Change]), "0.0%"))
+FCR Status Colour = IF([FCR MoM Change]>=0, "#2E8B57", "#C0392B")
+
+MTTR Prev Month = CALCULATE([MTTR (Hrs)],DATEADD(Dim_Date[Date],-1,MONTH))
+MTTR MoM Change = [MTTR (Hrs)]-[MTTR Prev Month]
+MTTR Delta Value = IF(ISBLANK([MTTR MoM Change]), "", IF([MTTR MoM Change]>=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([MTTR MoM Change]), "0.0") & " hrs")
+MTTR Status Colour = IF([MTTR MoM Change]<=0, "2E8B57", "#C0392B")
+
+Non-Vendor Breach Prev Month = CALCULATE([Non-Vendor Breach %], DATEADD(Dim_Date[Date], -1, MONTH))
+Non-Vendor Breach MoM Change = [Non-Vendor Breach %]-[Non-Vendor Breach Prev Month]
+Non-Vendor Breach Delta Value = IF(ISBLANK([Non-Vendor Breach MoM Change]), "", IF([Non-Vendor Breach MoM Change] >=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([Non-Vendor Breach MoM Change]), "0.0%")) 
+Non-Vendor Breach Status Colour = IF([Non-Vendor Breach MoM Change] <=0, "#2E8B57", "#C0392B")
+
+Open Tickets Prev Month = CALCULATE([Open Tickets], DATEADD(Dim_Date[Date], -1, MONTH))
+Open Tickets MoM Change = [Open Tickets]-[Open Tickets Prev Month]
+Open Tickets Delta Value = IF(ISBLANK([Open Tickets MoM Change]), "", IF([Open Tickets MoM Change]>=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([Open Tickets MoM Change]), "#,0"))
+Open Tickets Status Colour = IF([Open Tickets MoM Change]<=0, "#2E8B57", "#C0392B")
+
+Reopen Rate Prev Month = CALCULATE([Reopen Rate %],DATEADD(Dim_Date[Date],-1,MONTH))
+Reopen Rate MoM Change = [Reopen Rate %]-[Reopen Rate Prev Month]
+Reopen Rate Delta Value = IF(ISBLANK([Reopen Rate MoM Change]), "", IF([Reopen Rate %]>=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([Reopen Rate MoM Change]), "0.0%"))
+Reopen Rate Status Colour = IF([Reopen Rate MoM Change]<=0, "#2E8B57", "#C0392B")
+
+SLA Compliance Prev Month = CALCULATE([SLA Compliance %],DATEADD(Dim_Date[Date],-1,MONTH))
+SLA Compliance MoM Change = [SLA Compliance %]-[SLA Compliance Prev Month]
+SLA Delta Value = IF(ISBLANK([SLA Compliance MoM Change]), "", IF([SLA Compliance MoM Change]>=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([SLA Compliance MoM Change]), "0.0%"))
+SLA Status Colour = IF([SLA Compliance %]>=[SLA Target %], "#2E8B57", IF([SLA Compliance %]>=[SLA Target %]-0.10, "#F0A30A", "#C0392B"))
+
+Tickets Per Engineer Prev Month = CALCULATE([Tickets Per Engineer], DATEADD(Dim_Date[Date], -1, MONTH))
+Tickets Per Engineer MoM Change = [Tickets Per Engineer]-[Tickets Per Engineer Prev Month]
+Tickets Per Engineer Delta Value = IF(ISBLANK([Tickets Per Engineer MoM Change]), "", IF([Tickets Per Engineer MoM Change]>=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([Tickets Per Engineer MoM Change]), "#,0"))
+Tickets Per Engineer Status Colour = "#6C757D"
+
+Total Tickets Prev Month = CALCULATE([Total Tickets], DATEADD(Dim_Date[Date], -1, MONTH))
+Total Tickets MoM Change = [Total Tickets]-[Total Tickets Prev Month]
+Total Tickets Delta Value = IF(ISBLANK([Total Tickets MoM Change]), "", IF([Total Tickets MoM Change]>=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([Total Tickets MoM Change]), "#,0"))
+Total Tickets Status Colour = "#6C757D"
+
+Unassigned Prev Month = CALCULATE([Unassigned %], DATEADD(Dim_Date[Date], -1, MONTH))
+Unassigned MoM Change = [Unassigned %]-[Unassigned Prev Month]
+Unassigned Delta Value = IF(ISBLANK([Unassigned MoM Change]), "", IF([Unassigned MoM Change]>=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([Unassigned MoM Change]), "0.0%"))
+Unassigned Status Colour = IF([Unassigned MoM Change]<=0, "#2E8B57", "#C0392B")
+
+Vendor Breach Prev Month = CALCULATE([Vendor Breach %], DATEADD(Dim_Date[Date], -1, MONTH))
+Vendor Breach MoM Change = [Vendor Breach %]-[Vendor Breach Prev Month]
+Vendor Breach Delta Value = IF(ISBLANK([Vendor Breach MoM Change]), "", IF([Vendor Breach MoM Change] >=0, UNICHAR(9650) & " ", UNICHAR(9660) & " ") & FORMAT(ABS([Vendor Breach MoM Change]), "0.0%"))
+Vendor Breach Status Colour = IF([Vendor Breach MoM Change] <=0, "#2E8B57", "#C0392B")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
