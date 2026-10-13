@@ -96,7 +96,7 @@ Created a dedicated drill-through page to view detailed ticket-level information
 
 Explore the complete interactive Power BI dashboard by downloading the project file.
 
-[Download the Power BI Project.pbix](IT helpdesk incident & SLA analysis.pbix)
+[Download the Power BI Project (.pbix)](IT_Helpdesk_Incident_SLA_Analysis.pbix)
 
 ## Key Business Insights
 
