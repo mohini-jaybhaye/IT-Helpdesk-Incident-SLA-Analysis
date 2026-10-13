@@ -87,11 +87,6 @@ Evaluates team-level and engineer-level performance using SLA compliance, ticket
 
 ![Team & Engineer Performance](04_Team_Engineer_Performance.png)
 
-### 5. Ticket Details (Drill-through)
-Created a dedicated drill-through page to view detailed ticket-level information based on the selected data context. Users can navigate from summary visuals to the Ticket Details page to investigate specific incidents. The screenshot demonstrates an example of P1 (Priority 1) ticket details, allowing users to investigate high-priority incidents from summary-level visuals.
-
-![Ticket Details Drill-through](05_Ticket_Details_Drillthrough.png)
-
 ## Power BI Dashboard
 
 Explore the complete interactive Power BI dashboard by downloading the project file.
@@ -120,7 +115,10 @@ Explore the complete interactive Power BI dashboard by downloading the project f
 
 - **Interactive Slicers:** Filter dashboard data to explore incidents based on available categories and dimensions.
 - **Page Navigation:** Navigate between the four dashboard pages for a structured analysis of helpdesk performance.
-- **Drill-through Analysis:** Navigate from summary visuals to the Ticket Details page to investigate individual tickets based on the selected data context.
+- **Drill-through Analysis:** Created a dedicated drill-through page to view detailed ticket-level information based on the selected data context. Users can navigate from summary visuals to the Ticket Details page to investigate specific incidents. The screenshot demonstrates an example of P1 (Priority 1) ticket details, allowing users to investigate high-priority incidents from summary-level visuals.
+
+![Ticket Details Drill-through](05_Ticket_Details_Drillthrough.png)
+
 - **KPI Cards and Visualizations:** Monitor key performance indicators and identify patterns in SLA compliance, ticket backlog, ageing, and team performance.
 - **Row-Level Security (RLS):** Configured and tested role-based data access for four support teams, including Network Team Lead and Desktop Support Team Lead, to ensure that users can view data relevant to their assigned teams.
 
