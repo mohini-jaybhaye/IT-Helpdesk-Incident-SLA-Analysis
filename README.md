@@ -4,8 +4,7 @@
 
 ## Project Overview
 
-This project focuses on analyzing IT helpdesk incidents and Service Level Agreement (SLA) performance for 10K incident tickets using Power BI. The dashboard provides insights into ticket volume, SLA compliance, resolution time, backlog ageing, root causes, escalations, and team and engineer performance.
-The objective is to identify SLA breaches, monitor unresolved tickets, understand operational bottlenecks, and support data-driven decisions to improve IT support efficiency.
+This project focuses on analyzing IT helpdesk incidents and monitoring Service Level Agreement (SLA) performance using Power BI. A synthetic dataset containing 10,000 incident tickets was used for portfolio demonstration and business analysis. The dashboard provides insights into ticket volume, SLA compliance, resolution time, backlog ageing, root causes, escalations, and team and engineer performance.The objective is to identify SLA breaches, monitor unresolved tickets, understand operational bottlenecks, and support data-driven decisions to improve IT support efficiency.
 
 ## Business Problem
 
@@ -93,6 +92,12 @@ Created a dedicated drill-through page to view detailed ticket-level information
 
 ![Ticket Details Drill-through](05_Ticket_Details_Drillthrough.png)
 
+## Power BI Dashboard
+
+Explore the complete interactive Power BI dashboard by downloading the project file.
+
+[Download the Power BI Project (.pbix)](IT_Helpdesk_Incident_SLA_Analysis.pbix)
+
 ## Key Business Insights
 
 - **SLA Compliance:** Overall SLA compliance is 81.4%, which is below the target of 95%, indicating scope for improvement in timely ticket resolution.
@@ -120,9 +125,11 @@ Created a dedicated drill-through page to view detailed ticket-level information
 - **Row-Level Security (RLS):** Configured and tested role-based data access for four support teams, including Network Team Lead and Desktop Support Team Lead, to ensure that users can view data relevant to their assigned teams.
 
 **RLS Role Configuration**
+
 ![RLS Role Configuration](RLS_Role_Configuration.png)
 
 **RLS Validation Example — Network Team**
+
 ![Network Team RLS Example](RLS_Network_Team_Example.png)
 
 
