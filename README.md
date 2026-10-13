@@ -55,9 +55,15 @@ The project uses a star-schema data model with Fact_Tickets as the central fact 
 
 ![Power BI Data Model](Star_Schema_Data_Model.png)
 
-### Calculated Columns & Metrics
+### DAX: Calculated Columns & Measures
 - Created calculated columns for Created Hour, Resolution Hour, First Response Hour, Age Days, Ageing Bucket, Open SLA Status and SLA Breach Flag.
 - Developed DAX measures to analyze SLA Compliance, Mean Time to Resolution (MTTR), Open Tickets, Backlog Ageing, Reopen Rate, and other performance indicators.
+
+## DAX Documentation
+The following files contain the DAX calculations used in this project.
+
+[DAX Measures](Measures.dax) – KPI calculations, SLA metrics, MoM changes, delta values, status indicators, and other measures.
+[Calculated Columns](Calculated_Columns.dax) – Calculated columns used for ticket ageing, SLA tracking, response time, and resolution time.
 
 ## Dashboard Pages
 
