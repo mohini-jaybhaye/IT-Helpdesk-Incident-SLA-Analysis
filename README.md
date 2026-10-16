@@ -6,11 +6,13 @@
 
 This project focuses on analyzing IT helpdesk incidents and monitoring Service Level Agreement (SLA) performance using Power BI. A synthetic dataset containing 10,000 incident tickets was used for portfolio demonstration and business analysis. The dashboard provides insights into ticket volume, SLA compliance, resolution time, backlog ageing, root causes, escalations, and team and engineer performance.The objective is to identify SLA breaches, monitor unresolved tickets, understand operational bottlenecks, and support data-driven decisions to improve IT support efficiency.
 
+---
 ## Business Problem
 
 IT support teams handle a large volume of incident tickets daily. However, poor SLA compliance, delayed resolutions, increasing ticket backlogs, recurring issues, and uneven workload distribution can affect service quality and operational efficiency.
 The goal of this project is to analyze helpdesk ticket data, identify SLA breaches and backlog issues, understand the major causes of incidents, and evaluate team and engineer performance to help improve IT support operations.
 
+---
 ## Project Objectives
 
 - Analyze IT helpdesk ticket volume and SLA compliance.
@@ -21,6 +23,7 @@ The goal of this project is to analyze helpdesk ticket data, identify SLA breach
 - Compare team and engineer performance.
 - Provide actionable insights to support better workload management and timely ticket resolution.
 
+---
 ## Tools & Technologies
 
 - **Microsoft Excel:** Used as the source file for helpdesk incident data.
@@ -29,7 +32,7 @@ The goal of this project is to analyze helpdesk ticket data, identify SLA breach
 - **Power BI Desktop:** Used to build interactive dashboards and visualize key performance indicators.
 - **DAX (Data Analysis Expressions):** Used to create calculated measures and columns for SLA analysis, ticket ageing, resolution time, and performance metrics.
 
-
+---
 ## Data Preparation & Modeling
 
 ### Data Cleaning & Transformation
@@ -54,6 +57,26 @@ The project uses a star-schema data model with Fact_Tickets as the central fact 
 
 ![Power BI Data Model](images/Star_Schema_Data_Model.png)
 
+---
+## Project Workflow
+
+```text
+IT Helpdesk Incident Data
+          ↓
+Power Query Data Cleaning
+          ↓
+Data Modeling & Relationships
+          ↓
+DAX Calculated Columns & Measures
+          ↓
+Interactive Power BI Dashboards
+          ↓
+SLA, Backlog & Team Performance Analysis
+          ↓
+Business Insights & Recommendations
+```
+
+---
 ## DAX: Calculated Columns & Measures
 - Created calculated columns for Created Hour, Resolution Hour, First Response Hour, Age Days, Ageing Bucket, Open SLA Status and SLA Breach Flag.
 - Developed DAX measures to analyze SLA Compliance, Mean Time to Resolution (MTTR), Open Tickets, Backlog Ageing, Reopen Rate, and other performance indicators.
@@ -65,6 +88,7 @@ The following files contain the DAX calculations used in this project.
 
 [Calculated Columns](DAX/Calculated_Columns.dax) – Calculated columns used for ticket ageing, SLA tracking, response time, and resolution time.
 
+---
 ## Dashboard Pages
 
 ### 1. Incident & SLA Performance
@@ -87,12 +111,14 @@ Evaluates team-level and engineer-level performance using SLA compliance, ticket
 
 ![Team & Engineer Performance](images/04_Team_Engineer_Performance.png)
 
+---
 ## Power BI Dashboard
 
 Explore the complete interactive Power BI dashboard by downloading the project file.
 
 [Download the Power BI Project (.pbix)](PowerBI/IT_Helpdesk_Incident_SLA_Analysis.pbix)
 
+---
 ## Key Business Insights
 
 - **SLA Compliance:** Overall SLA compliance is 81.4%, which is below the target of 95%, indicating scope for improvement in timely ticket resolution.
@@ -102,6 +128,7 @@ Explore the complete interactive Power BI dashboard by downloading the project f
 - **Root Cause Analysis:** Root cause analysis helps identify incident categories associated with SLA breaches and resolution delays, supporting further investigation into recurring issues.
 - **Operational Monitoring:** Team-level, engineer-level, and ticket-ageing analysis helps identify areas requiring attention and supports better workload management.
 
+---
 ## Business Recommendations
 
 - **Improve SLA Compliance:** Investigate the reasons for SLA breaches and strengthen ticket prioritization to move overall compliance closer to the 95% target.
@@ -111,6 +138,7 @@ Explore the complete interactive Power BI dashboard by downloading the project f
 - **Investigate Root Causes:** Analyze recurring incident categories and address underlying issues to reduce repeated tickets and resolution delays.
 - **Optimize Workload Distribution:** Monitor team and engineer workloads to identify imbalances and support more effective ticket assignment.
 
+---
 ## Interactive Features
 
 - **Interactive Slicers:** Filter dashboard data to explore incidents based on available categories and dimensions.
@@ -130,7 +158,34 @@ Explore the complete interactive Power BI dashboard by downloading the project f
 
 ![Network Team RLS Example](images/RLS_Network_Team_Example.png)
 
+---
+## Project Structure
 
+```text
+IT-Helpdesk-Incident-SLA-Analysis/
+│
+├── README.md
+│
+├── PowerBI/
+│   └── IT_Helpdesk_Incident_SLA_Analysis.pbix
+│
+├── DAX/
+│   ├── Calculated_Columns.dax
+│   └── Measures.dax
+│
+└── images/
+    ├── 01_Incident_SLA_Performance.png
+    ├── 02_Root_Cause_SLA_Analysis.png
+    ├── 03_Backlog_Ageing_Exceptions.png
+    ├── 04_Team_Engineer_Performance.png
+    ├── 05_Ticket_Details_Drillthrough.png
+    ├── Power_Query_Applied_Steps.png
+    ├── RLS_Network_Team_Example.png
+    ├── RLS_Role_Configuration.png
+    └── Star_Schema_Data_Model.png
+```
+
+---
 ## Project Outcome
 
 This project demonstrates the use of Power BI to transform raw IT helpdesk ticket data into meaningful operational insights.
