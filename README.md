@@ -46,13 +46,13 @@ Data cleaning and transformation were performed in Power Query to improve data q
 **Power Query Applied Steps**
 
 The Power Query Editor was used to apply and track data cleaning and transformation steps before loading the data into Power BI.
-![Power Query Applied Steps](Power_Query_Applied_Steps.png)
+![Power Query Applied Steps](images/Power_Query_Applied_Steps.png)
 
 
 ### Data Modeling
 The project uses a star-schema data model with Fact_Tickets as the central fact table connected to dimension tables such as Dim_Date, Dim_Engineer, Dim_Category, and Dim_Priority. This structure supports organized data analysis and reporting across different helpdesk dimensions.
 
-![Power BI Data Model](Star_Schema_Data_Model.png)
+![Power BI Data Model](images/Star_Schema_Data_Model.png)
 
 ## DAX: Calculated Columns & Measures
 - Created calculated columns for Created Hour, Resolution Hour, First Response Hour, Age Days, Ageing Bucket, Open SLA Status and SLA Breach Flag.
@@ -61,37 +61,37 @@ The project uses a star-schema data model with Fact_Tickets as the central fact 
 ### DAX Documentation
 The following files contain the DAX calculations used in this project.
 
-[DAX Measures](Measures.dax) – KPI calculations, SLA metrics, MoM changes, delta values, status indicators, and other measures.
+[DAX Measures](DAX/Measures.dax) – KPI calculations, SLA metrics, MoM changes, delta values, status indicators, and other measures.
 
-[Calculated Columns](Calculated_Columns.dax) – Calculated columns used for ticket ageing, SLA tracking, response time, and resolution time.
+[Calculated Columns](DAX/Calculated_Columns.dax) – Calculated columns used for ticket ageing, SLA tracking, response time, and resolution time.
 
 ## Dashboard Pages
 
 ### 1. Incident & SLA Performance
 Provides an overview of helpdesk operations through key performance indicators, including SLA Compliance, Mean Time to Resolution (MTTR), Open Tickets, Reopen Rate and other incident performance metrics.
 
-![Incident & SLA Performance](01_Incident_SLA_Performance.png)
+![Incident & SLA Performance](images/01_Incident_SLA_Performance.png)
 
 ### 2. Root Cause & SLA Analysis
 Analyzes incident root causes and SLA performance to identify patterns associated with SLA breaches and resolution delays.
 
-![Root Cause & SLA Analysis](02_Root_Cause_SLA_Analysis.png)
+![Root Cause & SLA Analysis](images/02_Root_Cause_SLA_Analysis.png)
 
 ### 3. Backlog, Ageing & Exceptions
 Focuses on unresolved tickets, ticket ageing categories, overdue incidents, and SLA-breached open tickets to highlight areas requiring immediate attention.
 
-![Backlog, Ageing & Exceptions](03_Backlog_Ageing_Exceptions.png)
+![Backlog, Ageing & Exceptions](images/03_Backlog_Ageing_Exceptions.png)
 
 ### 4. Team & Engineer Performance
 Evaluates team-level and engineer-level performance using SLA compliance, ticket resolution, workload, and other relevant performance metrics.
 
-![Team & Engineer Performance](04_Team_Engineer_Performance.png)
+![Team & Engineer Performance](images/04_Team_Engineer_Performance.png)
 
 ## Power BI Dashboard
 
 Explore the complete interactive Power BI dashboard by downloading the project file.
 
-[Download the Power BI Project (.pbix)](IT_Helpdesk_Incident_SLA_Analysis.pbix)
+[Download the Power BI Project (.pbix)](PowerBI/IT_Helpdesk_Incident_SLA_Analysis.pbix)
 
 ## Key Business Insights
 
@@ -117,18 +117,18 @@ Explore the complete interactive Power BI dashboard by downloading the project f
 - **Page Navigation:** Navigate between the four dashboard pages for a structured analysis of helpdesk performance.
 - **Drill-through Analysis:** Created a dedicated drill-through page to view detailed ticket-level information based on the selected data context. Users can navigate from summary visuals to the Ticket Details page to investigate specific incidents. The screenshot demonstrates an example of P1 (Priority 1) ticket details, allowing users to investigate high-priority incidents from summary-level visuals.
 
-![Ticket Details Drill-through](05_Ticket_Details_Drillthrough.png)
+![Ticket Details Drill-through](images/05_Ticket_Details_Drillthrough.png)
 
 - **KPI Cards and Visualizations:** Monitor key performance indicators and identify patterns in SLA compliance, ticket backlog, ageing, and team performance.
 - **Row-Level Security (RLS):** Configured and tested role-based data access for four support teams, including Network Team Lead and Desktop Support Team Lead, to ensure that users can view data relevant to their assigned teams.
 
 **RLS Role Configuration**
 
-![RLS Role Configuration](RLS_Role_Configuration.png)
+![RLS Role Configuration](images/RLS_Role_Configuration.png)
 
 **RLS Validation Example — Network Team**
 
-![Network Team RLS Example](RLS_Network_Team_Example.png)
+![Network Team RLS Example](images/RLS_Network_Team_Example.png)
 
 
 ## Project Outcome
