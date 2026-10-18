@@ -1,6 +1,6 @@
 # IT Helpdesk Incident & SLA Performance Analysis
 
-**Tech Stack:** Power BI | Power BI Desktop | Power Query | DAX | Data Modeling
+**Tech Stack:** Power BI | Power BI Desktop | Power Query | DAX | Data Modeling | Dashboard Development 
 
 ## Project Overview
 
